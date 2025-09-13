@@ -86,6 +86,10 @@ export const serverRoutes: ServerRoute[] = [
     },
   },
   {
+    path: 'events-and-leagues',
+    renderMode: RenderMode.Server, // Use SSR for events to get fresh data
+  },
+  {
     path: '**',
     renderMode: RenderMode.Prerender, // Keep default prerender for other routes if needed
   },

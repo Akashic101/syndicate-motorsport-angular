@@ -20,7 +20,17 @@ export class EventService {
   constructor(private http: HttpClient) {}
 
   getEvents(): Observable<Event[]> {
-    return this.http.get(this.csvUrl, { responseType: 'text' })
+    // Add timestamp to prevent caching
+    const urlWithTimestamp = `${this.csvUrl}&t=${Date.now()}`;
+    
+    return this.http.get(urlWithTimestamp, { 
+      responseType: 'text',
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
+    })
       .pipe(
         map(csv => this.parseCSV(csv))
       );
